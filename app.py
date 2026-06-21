@@ -675,6 +675,9 @@ if page == "🏠 Home":
         <p style="font-size:1.3rem; color:#BF360C; font-weight:500;">
             Tempat terbaik untuk mengolah gambar Anda dengan sentuhan kecantikan.
         </p>
+        <p>📌 <b>Keterangan:</b> Halaman ini adalah pintu masuk utama. 
+        Gunakan menu di sidebar untuk mengakses fitur pengolahan gambar. 
+        Selamat berkarya! 🌸</p>
         <div class="bling-shower">✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨</div>
     </div>
     """, unsafe_allow_html=True)
@@ -713,14 +716,6 @@ if page == "🏠 Home":
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("""
-    <div class="footer-note">
-        <p>📌 <b>Keterangan:</b> Halaman ini adalah pintu masuk utama. 
-        Gunakan menu di sidebar untuk mengakses fitur pengolahan gambar. 
-        Selamat berkarya! 🌸</p>
-    </div>
-    """, unsafe_allow_html=True)
-
 elif page == "🌫️ Grayscale":
     if not st.session_state.grayscale_visited:
         st.balloons()
@@ -743,6 +738,8 @@ elif page == "🌫️ Grayscale":
             🌟 <b>Grayscale</b> adalah seni mengubah spektrum warna menjadi gradasi abu-abu yang elegan. 
             Setiap piksel bercerita tentang kontras, tekstur, dan emosi – tanpa gangguan warna.
         </p>
+        <p>📌 <b>Keterangan:</b> Fitur ini mengubah gambar berwarna menjadi hitam-putih (grayscale). 
+        Hasilnya dapat diunduh dalam format PNG. Cocok untuk efek klasik dan penghematan ukuran file.</p>
         <p style="color:#880E4F; font-style:italic;">
             "Terkadang, hitam-putih justru lebih hidup."
         </p>
@@ -825,13 +822,6 @@ elif page == "🌫️ Grayscale":
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown("""
-    <div class="footer-note">
-        <p>📌 <b>Keterangan:</b> Fitur ini mengubah gambar berwarna menjadi hitam-putih (grayscale). 
-        Hasilnya dapat diunduh dalam format PNG. Cocok untuk efek klasik dan penghematan ukuran file.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
 elif page == "🗜️ Kompresi":
     if not st.session_state.kompresi_visited:
         st.balloons()
@@ -857,6 +847,8 @@ elif page == "🗜️ Kompresi":
         <p style="color:#1565C0; font-style:italic;">
             "Warna adalah jiwa gambar – kompresi tanpa menghilangkan keindahannya."
         </p>
+        <p>📌 <b>Keterangan:</b> Kompresi PCA diterapkan pada setiap kanal warna (R, G, B) secara terpisah. 
+        Atur jumlah komponen (k) atau persentase varians yang diinginkan. Metrik kualitas (SSIM, PSNR) dan kurva akumulasi membantu mengevaluasi hasil.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1028,14 +1020,11 @@ elif page == "🗜️ Kompresi":
                 st.error(f"Terjadi kesalahan: {e}")
 
     else:
-        st.info("👆 Unggah gambar untuk memulai kompresi.")
-
-    st.markdown("""
-    <div class="footer-note">
-        <p>📌 <b>Keterangan:</b> Kompresi PCA diterapkan pada setiap kanal warna (R, G, B) secara terpisah. 
-        Atur jumlah komponen (k) atau persentase varians yang diinginkan. Metrik kualitas (SSIM, PSNR) dan kurva akumulasi membantu mengevaluasi hasil.</p>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="text-align:center; padding:2rem 0;">
+            <p style="font-size:1.2rem; color:#6A1B4D;">👆 Unggah gambar untuk memulai kompresi</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 elif page == "🔍 Deteksi":
     if not st.session_state.deteksi_visited:
