@@ -14,6 +14,9 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 from sklearn.datasets import fetch_lfw_people
 import tempfile
 import zipfile
+import cv2
+import warnings
+warnings.filterwarnings("ignore")
 
 # ======================== KONFIGURASI HALAMAN ========================
 st.set_page_config(
