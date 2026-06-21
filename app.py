@@ -1152,52 +1152,71 @@ elif page == "🔍 Deteksi":
                 persentase = sim * 100
                 var_ratio = pca.explained_variance_ratio_.sum() * 100
 
-                # Tampilkan hasil
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
-                st.markdown(f'<div class="score">{persentase:.2f}%</div>', unsafe_allow_html=True)
-                if persentase >= threshold * 100:
-                    st.markdown(f'<div class="label">✅ MIRIP! (≥ {threshold*100:.0f}%)</div>', unsafe_allow_html=True)
-                else:
-                    st.markdown(f'<div class="label">❌ TIDAK MIRIP (< {threshold*100:.0f}%)</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="detail">Komponen PCA: {pca.n_components}</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="detail">Varians: {var_ratio:.1f}%</div>', unsafe_allow_html=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+                 # ----- TAMPILKAN HASIL -----
+                st.subheader("Hasil Deteksi Foto Kamu ^^")
+                kolom_r1, kolom_r2, kolom_r3 = st.columns([2, 2, 1.5])
+                with kolom_r1:
+                    st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                    st.markdown('<div class="pink-badge">📸 Foto Pertama</div>', unsafe_allow_html=True)
+                    st.image(img1_warna, caption=f"Resize {UKURAN[0]}x{UKURAN[1]}", use_container_width=True)
+                    st.markdown('</div>', unsafe_allow_html=True)
+                with kolom_r2:
+                    st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                    st.markdown('<div class="pink-badge">📸 Foto Kedua</div>', unsafe_allow_html=True)
+                    st.image(img2_warna, caption=f"Resize {UKURAN[0]}x{UKURAN[1]}", use_container_width=True)
+                    st.markdown('</div>', unsafe_allow_html=True)
+                with kolom_r3:
+                    st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                    st.markdown('<div class="pink-badge">Skor Kemiripan Foto!!</div>', unsafe_allow_html=True)
+                    st.markdown(f"<h1 style='color:#AD1457;font-size:42px;'>{kemiripan:.2%}</h1>", unsafe_allow_html=True)
+                    if kemiripan >= ambang:
+                        st.success("**WAH MIRIP!! :D**")
+                        st.balloons()
+                    elif kemiripan >= 0.50:
+                        st.warning("**HMM CUKUP MIRIP LAH YA ;D**")
+                    else:
+                        st.error("**TIDAK MIRIP ^^**")
+                    st.caption(f"Komponen PCA: {pca.n_components_}")
+                    st.caption(f"Varians: {np.sum(pca.explained_variance_ratio_)*100:.1f}%")
+                    st.markdown('</div>', unsafe_allow_html=True)
 
-                # Grafik
-                st.markdown("### 📈 Grafik Akumulasi Informasi PCA")
-                cumsum_var = np.cumsum(pca.explained_variance_ratio_)
-                fig, ax = plt.subplots(figsize=(8, 5))
-                ax.plot(range(1, len(cumsum_var)+1), cumsum_var, 'b-', linewidth=2, label='Kurva Akumulasi')
-                ax.axhline(y=0.95, color='r', linestyle='--', alpha=0.7, label='95% Varians')
-                ax.axhline(y=threshold, color='g', linestyle='--', alpha=0.7, label=f'Threshold {threshold*100:.0f}%')
-                ax.axvline(x=pca.n_components, color='orange', linestyle=':', alpha=0.7, label=f'k = {pca.n_components}')
-                ax.set_xlabel('Jumlah Komponen (k)')
-                ax.set_ylabel('Akumulasi Varians')
-                ax.set_title('Kurva Akumulasi Informasi PCA')
-                ax.grid(True, alpha=0.3)
-                ax.legend()
-                st.pyplot(fig)
-                plt.close(fig)
-
-                # Penjelasan grafik
-                st.markdown("""
-                <div style="background: #FCE4EC; padding: 1rem; border-radius: 12px; margin-top: 1rem; border: 1px solid #EC407A;">
-                    <p style="margin:0;"><b>💡 Cara baca grafik:</b><br>
-                    • <b>Garis biru</b> → akumulasi varians. Semakin tinggi, semakin banyak informasi yang dipertahankan.<br>
-                    • <b>Garis merah putus-putus</b> → 95% varians data sudah terwakili.<br>
-                    • <b>Garis hijau putus-putus</b> → threshold kemiripan yang Anda atur.<br>
-                    • <b>Garis oranye</b> → jumlah komponen PCA yang digunakan (k).<br>
-                    Dengan k yang cukup, kita bisa meringkas wajah menjadi beberapa angka tanpa kehilangan banyak informasi.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-                st.balloons()
-
-            except Exception as e:
-                st.error(f"Terjadi kesalahan: {e}")
-    else:
-        st.info("👆 Upload dua foto wajah untuk membandingkan.")
+                # ----- GRAFIK + PENJELASAN -----
+                st.markdown("---")
+                kolom_graf, kolom_exp = st.columns([1, 1])
+                
+                with kolom_graf:
+                    st.subheader("Grafik Akumulasi Informasi")
+                    varians = np.cumsum(pca.explained_variance_ratio_)
+                    fig, ax = plt.subplots(figsize=(5, 3.5))
+                    ax.plot(range(1, len(varians)+1), varians, 'bo-', linewidth=2, markersize=5)
+                    ax.axhline(y=0.95, color='red', linestyle='--', linewidth=2, label='95% Varians')
+                    ax.axhline(y=ambang, color='green', linestyle=':', linewidth=2, label=f'Threshold {ambang:.2f}')
+                    ax.set_xlabel('Jumlah Komponen PCA (k)', fontsize=10)
+                    ax.set_ylabel('Akumulasi Informasi', fontsize=10)
+                    ax.set_title('Kurva Akumulasi Informasi PCA', fontsize=11)
+                    ax.grid(True, alpha=0.3)
+                    ax.legend(loc='lower right', fontsize=8)
+                    ax.set_ylim(0, 1.05)
+                    st.pyplot(fig)
+                
+                with kolom_exp:
+                    st.subheader("Penjelasan Grafik!!")
+                    st.markdown("""
+                    <div class="explanation-box">
+                    Grafik ini menunjukkan seberapa banyak <b>informasi wajah</b> yang bisa dipertahankan jika kita menggunakan sejumlah komponen PCA (k).
+                    
+                    <br><br>
+                    
+                    <b>🔵 Garis biru</b> → kurva akumulasi varians. Semakin tinggi, semakin baik.<br>
+                    <b>🔴 Garis merah putus-putus</b> → 95% varians data sudah terwakili.<br>
+                    <b>🟢 Garis hijau titik-titik</b> → <b>Threshold</b> (batas kemiripan) yang kamu atur di sidebar.
+                    
+                    <br><br>
+                    
+                    <b>💡 Cara baca:</b><br>
+                    Dari 10.000 pixel wajah, PCA bisa meringkasnya menjadi 50 angka saja tanpa kehilangan banyak informasi. Semakin tinggi garis biru, semakin baik representasi wajahnya.
+                    </div>
+                    """, unsafe_allow_html=True)
 
     # --- KETERANGAN TAMBAHAN DI BAWAH DETEKSI ---
     st.markdown("""
