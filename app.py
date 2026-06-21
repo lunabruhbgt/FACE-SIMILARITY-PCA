@@ -598,7 +598,7 @@ elif st.session_state.page == "🔍 Deteksi":
 
 st.sidebar.markdown("---")
 st.sidebar.markdown('<div class="sidebar-profile">', unsafe_allow_html=True)
-st.sidebar.markdown("### 👥 Pengembangan Aplikasi")
+st.sidebar.markdown("### 👥 Pengembang Aplikasi")
 st.sidebar.markdown("**Teknik Informatika**")
 
 anggota = [
@@ -608,18 +608,21 @@ anggota = [
         "ig": "@gea_destadia_10",
         "telp": "0831-5068-7481",
     },
+    
     {
         "inisial": "LA",
         "nama": "Luna Amilia",
         "ig": "@luunaaamiiii",
         "telp": "lunaamilia0@gmail.com",
     },
+    
     {
         "inisial": "NA",
         "nama": "Nadia Azizah",
         "ig": "@ndyyzh",
         "telp": "0858-4631-3309",
     },
+    
     {
         "inisial": "DAAD",
         "nama": "Dalilah Arifah Ariandi DJR",
