@@ -629,15 +629,8 @@ anggota = [
 ]
 
 for member in anggota:
-    foto_b64 = get_image_base64(member.get("foto", ""))
-    if foto_b64:
-        avatar_html = f'<img src="data:image/jpeg;base64,{foto_b64}" />'
-    else:
-        avatar_html = member["inisial"]
-    
     st.sidebar.markdown(f"""
     <div class="profile-item">
-        <div class="profile-avatar">{avatar_html}</div>
         <div class="profile-info">
             <div class="name">• {member['nama']} •</div>
             <div class="detail">📸 {member['ig']}</div>
