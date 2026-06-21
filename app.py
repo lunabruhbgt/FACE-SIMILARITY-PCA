@@ -607,19 +607,16 @@ anggota = [
         "ig": "@gea_destadia_10",
         "telp": "0831-5068-7481",
     },
-    </p>
     {
         "nama": "Luna Amilia",
         "ig": "@luunaaamiiii",
         "telp": "lunaamilia0@gmail.com",
     },
-    </p>
     {
         "nama": "Nadia Azizah",
         "ig": "@ndyyzh",
         "telp": "0858-4631-3309",
     },
-    </p>
     {
         "nama": "Dalilah Arifah Ariandi DJR",
         "ig": "@adellianav",
