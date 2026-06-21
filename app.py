@@ -675,9 +675,6 @@ if page == "🏠 Home":
         <p style="font-size:1.3rem; color:#BF360C; font-weight:500;">
             Tempat terbaik untuk mengolah gambar Anda dengan sentuhan kecantikan.
         </p>
-        <p>📌 <b>Keterangan:</b> Halaman ini adalah pintu masuk utama. 
-        Gunakan menu di sidebar untuk mengakses fitur pengolahan gambar. 
-        Selamat berkarya! 🌸</p>
         <div class="bling-shower">✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨ ✨</div>
     </div>
     """, unsafe_allow_html=True)
@@ -693,6 +690,9 @@ if page == "🏠 Home":
         <p style="color:#BF360C; font-style:italic;">
             "Setiap gambar memiliki cerita – biarkan kami membantu Anda menceritakannya."
         </p>
+        <p>📌 <b>Keterangan:</b> Halaman ini adalah pintu masuk utama. 
+        Gunakan menu di sidebar untuk mengakses fitur pengolahan gambar. 
+        Selamat berkarya! 🌸</p>
     </div>
     """, unsafe_allow_html=True)
 
