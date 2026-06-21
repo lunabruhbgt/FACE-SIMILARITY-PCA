@@ -765,55 +765,51 @@ elif page == "🌫️ Grayscale":
         accept_multiple_files=False
     )
 
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        col_img1, col_img2 = st.columns(2, gap="medium")
+if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    col_img1, col_img2 = st.columns(2, gap="medium")
 
-        with col_img1:
-            st.markdown('<div class="image-card">', unsafe_allow_html=True)
-            st.markdown("### 🖼️ Gambar Asli")
-            st.image(image, use_container_width=True)
-            st.markdown(f"*Ukuran: {image.width} x {image.height} px*")
+    with col_img1:
+        # Ganti image-card dengan result-container + pink-badge
+        st.markdown('<div class="result-container">', unsafe_allow_html=True)
+        st.markdown('<div class="pink-badge">🖼️ Gambar Asli</div>', unsafe_allow_html=True)
+        st.image(image, use_container_width=True)
+        st.caption(f"Ukuran: {image.width} x {image.height} px")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_img2:
+        # Tombol sudah full-width (use_container_width=True)
+        if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
+            gray_image = image.convert("L")
+            gray_rgb = gray_image.convert("RGB")
+            
+            # Tampilkan hasil dengan badge pink
+            st.markdown('<div class="result-container">', unsafe_allow_html=True)
+            st.markdown('<div class="pink-badge">⚫ Hasil Grayscale</div>', unsafe_allow_html=True)
+            st.image(gray_rgb, use_container_width=True)
+            st.caption(f"Ukuran: {gray_rgb.width} x {gray_rgb.height} px")
             st.markdown('</div>', unsafe_allow_html=True)
 
-        with col_img2:
-            if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
-                gray_image = image.convert("L")
-                gray_rgb = gray_image.convert("RGB")
+            # Tombol download
+            buf = io.BytesIO()
+            gray_rgb.save(buf, format="PNG")
+            byte_im = buf.getvalue()
+            b64 = base64.b64encode(byte_im).decode()
+            href = f'<a href="data:image/png;base64,{b64}" download="grayscale.png" style="text-decoration:none;">'
+            href += '<button class="download-btn">⬇️ Download Hasil</button></a>'
+            st.markdown(href, unsafe_allow_html=True)
 
-                st.markdown('<div class="image-card">', unsafe_allow_html=True)
-                st.markdown("### ⚫ Hasil Grayscale")
-                st.image(gray_rgb, use_container_width=True)
-                st.markdown(f"*Ukuran: {gray_rgb.width} x {gray_rgb.height} px*")
-                st.markdown('</div>', unsafe_allow_html=True)
+            st.success("🌸 Semoga membantu, terima kasih banyak telah menggunakan jasa layanan kami, salam cinta ❤️")
+            st.balloons()
 
-                buf = io.BytesIO()
-                gray_rgb.save(buf, format="PNG")
-                byte_im = buf.getvalue()
-                b64 = base64.b64encode(byte_im).decode()
-                href = f'<a href="data:image/png;base64,{b64}" download="grayscale.png" style="text-decoration:none;">'
-                href += '<button class="download-btn">⬇️ Download Hasil</button></a>'
-                st.markdown(href, unsafe_allow_html=True)
-
-                st.success("🌸 Semoga membantu, terima kasih banyak telah menggunakan jasa layanan kami, salam cinta ❤️")
-                st.balloons()
-
-                st.markdown("""
-                <div class="info-box">
-                    <b>💡 Manfaat Grayscale:</b><br>
-                    • Mengurangi kompleksitas warna, fokus pada bentuk dan tekstur.<br>
-                    • Menghemat ruang penyimpanan (ukuran file lebih kecil).<br>
-                    • Memberikan nuansa artistik dan klasik pada foto.
-                </div>
-                """, unsafe_allow_html=True)
-
-    else:
-        st.markdown("""
-        <div style="text-align:center; padding:2rem 0;">
-            <p style="font-size:1.2rem; color:#6A1B4D;">👆 Unggah gambar untuk mulai mengubahnya menjadi hitam-putih</p>
-            <p style="color:#AD1457; opacity:0.7;">Atau lihat contoh di bawah ini:</p>
-        </div>
-        """, unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box">
+                <b>💡 Manfaat Grayscale:</b><br>
+                • Mengurangi kompleksitas warna, fokus pada bentuk dan tekstur.<br>
+                • Menghemat ruang penyimpanan (ukuran file lebih kecil).<br>
+                • Memberikan nuansa artistik dan klasik pada foto.
+            </div>
+            """, unsafe_allow_html=True)
 
         example_img = Image.new('RGB', (400, 300), color='#FCE4EC')
         draw = ImageDraw.Draw(example_img)
