@@ -612,7 +612,7 @@ anggota = [
         "inisial": "LA",
         "nama": "Luna Amilia",
         "ig": "@luunaaamiiii",
-        "email": "lunaamilia0@gmail.com",
+        "telp": "lunaamilia0@gmail.com",
     },
     {
         "inisial": "NA",
