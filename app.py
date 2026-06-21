@@ -770,7 +770,7 @@ elif page == "🌫️ Grayscale":
         col_img1, col_img2 = st.columns(2, gap="medium")
 
         with col_img1:
-            st.markdown('<div class="result-container">', unsafe_allow_html=True)
+            st.markdown('<div class="image-card">', unsafe_allow_html=True)
             st.markdown("### 🖼️ Gambar Asli")
             st.image(image, use_container_width=True)
             st.markdown(f"*Ukuran: {image.width} x {image.height} px*")
@@ -781,7 +781,7 @@ elif page == "🌫️ Grayscale":
                 gray_image = image.convert("L")
                 gray_rgb = gray_image.convert("RGB")
 
-                st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                st.markdown('<div class="image-card">', unsafe_allow_html=True)
                 st.markdown("### ⚫ Hasil Grayscale")
                 st.image(gray_rgb, use_container_width=True)
                 st.markdown(f"*Ukuran: {gray_rgb.width} x {gray_rgb.height} px*")
@@ -955,14 +955,14 @@ elif page == "🗜️ Kompresi":
                 # Tampilkan gambar
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                    st.markdown('<div class="image-card">', unsafe_allow_html=True)
                     st.markdown('<div class="pink-badge">🖼️ Gambar Asli (RGB)</div>', unsafe_allow_html=True)
                     st.image(image, use_container_width=True)
                     st.markdown(f"*Ukuran: {w} x {h} px*")
                     st.markdown('</div>', unsafe_allow_html=True)
 
                 with col2:
-                    st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                    st.markdown('<div class="image-card">', unsafe_allow_html=True)
                     st.markdown(f'<div class="pink-badge">🗜️ Hasil Kompresi (k={k})</div>', unsafe_allow_html=True)
                     st.image(img_reconstructed, use_container_width=True)
                     st.markdown(f"*Ukuran: {w} x {h} px*")
