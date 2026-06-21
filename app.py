@@ -956,18 +956,18 @@ elif page == "🗜️ Kompresi":
                 col1, col2 = st.columns(2)
                 with col1:
                     st.markdown('<div class="image-card">', unsafe_allow_html=True)
-                    st.markdown("### 🖼️ Gambar Asli (RGB)")
+                    st.markdown('<div class="pink-badge">🖼️ Gambar Asli (RGB)</div>', unsafe_allow_html=True)
                     st.image(image, use_container_width=True)
                     st.markdown(f"*Ukuran: {w} x {h} px*")
                     st.markdown('</div>', unsafe_allow_html=True)
 
                 with col2:
                     st.markdown('<div class="image-card">', unsafe_allow_html=True)
-                    st.markdown(f"### 🗜️ Hasil Kompresi (k={k})")
+                    st.markdown(f'<div class="pink-badge">🗜️ Hasil Kompresi (k={k})</div>', unsafe_allow_html=True)
                     st.image(img_reconstructed, use_container_width=True)
                     st.markdown(f"*Ukuran: {w} x {h} px*")
                     st.markdown('</div>', unsafe_allow_html=True)
-
+                    
                 # Tombol download
                 buf = io.BytesIO()
                 img_reconstructed.save(buf, format="PNG")
