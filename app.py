@@ -738,11 +738,11 @@ elif page == "🌫️ Grayscale":
             🌟 <b>Grayscale</b> adalah seni mengubah spektrum warna menjadi gradasi abu-abu yang elegan. 
             Setiap piksel bercerita tentang kontras, tekstur, dan emosi – tanpa gangguan warna.
         </p>
-        <p>📌 <b>Keterangan:</b> Fitur ini mengubah gambar berwarna menjadi hitam-putih (grayscale). 
-        Hasilnya dapat diunduh dalam format PNG. Cocok untuk efek klasik dan penghematan ukuran file.</p>
         <p style="color:#880E4F; font-style:italic;">
             "Terkadang, hitam-putih justru lebih hidup."
         </p>
+        <p>📌 <b>Keterangan:</b> Fitur ini mengubah gambar berwarna menjadi hitam-putih (grayscale). 
+        Hasilnya dapat diunduh dalam format PNG. Cocok untuk efek klasik dan penghematan ukuran file.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1052,6 +1052,8 @@ elif page == "🔍 Deteksi":
         <p style="color:#880E4F; font-style:italic;">
             "Setiap wajah unik, tapi kecocokan bisa ditemukan."
         </p>
+        <p>📌 <b>Keterangan:</b> Deteksi kemiripan menggunakan PCA (Eigenfaces) dan Cosine Similarity. 
+        Upload data latih (ZIP) untuk hasil lebih akurat, atau biarkan sistem menggunakan data latih default LFW.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1229,11 +1231,8 @@ elif page == "🔍 Deteksi":
             except Exception as e:
                 st.error(f"Terjadi kesalahan: {e}")
     else:
-        st.info("👆 Upload dua foto wajah untuk membandingkan.")
-
-    st.markdown("""
-    <div class="footer-note">
-        <p>📌 <b>Keterangan:</b> Deteksi kemiripan menggunakan PCA (Eigenfaces) dan Cosine Similarity. 
-        Upload data latih (ZIP) untuk hasil lebih akurat, atau biarkan sistem menggunakan data latih default LFW.</p>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="text-align:center; padding:2rem 0;">
+            <p style="font-size:1.2rem; color:#6A1B4D;">👆 Upload dua foto wajah untuk membandingkan.</p>
+        </div>
+        """, unsafe_allow_html=True)
