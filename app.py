@@ -1266,15 +1266,11 @@ elif page == "🔍 Deteksi":
                     st.markdown("""
                     <div class="explanation-box">
                     Grafik ini menunjukkan seberapa banyak <b>informasi wajah</b> yang bisa dipertahankan jika kita menggunakan sejumlah komponen PCA (k).
-                    
                     <br><br>
-                    
                     <b>🔵 Garis biru</b> → kurva akumulasi varians. Semakin tinggi, semakin baik.<br>
                     <b>🔴 Garis merah putus-putus</b> → 95% varians data sudah terwakili.<br>
-                    <b>🟢 Garis hijau titik-titik</b> → <b>Threshold</b> (batas kemiripan) yang kamu atur di sidebar.
-                    
+                    <b>🟢 Garis hijau titik-titik</b> → <b>Threshold</b> (batas kemiripan) yang kamu atur.
                     <br><br>
-                    
                     <b>💡 Cara baca:</b><br>
                     Dari 10.000 pixel wajah, PCA bisa meringkasnya menjadi 50 angka saja tanpa kehilangan banyak informasi. Semakin tinggi garis biru, semakin baik representasi wajahnya.
                     </div>
@@ -1286,11 +1282,3 @@ elif page == "🔍 Deteksi":
                 st.error(f"Terjadi kesalahan: {e}")
     else:
         st.info("👆 Upload dua foto wajah untuk membandingkan.")
-
-    # --- KETERANGAN TAMBAHAN DI BAWAH DETEKSI ---
-    st.markdown("""
-    <div class="footer-note">
-        <p>📌 <b>Keterangan:</b> Deteksi kemiripan menggunakan PCA (Eigenfaces) dan Cosine Similarity. 
-        Upload data latih (ZIP) untuk hasil lebih akurat, atau biarkan sistem menggunakan data latih default LFW.</p>
-    </div>
-    """, unsafe_allow_html=True)
