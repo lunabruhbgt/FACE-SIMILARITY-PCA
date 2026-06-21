@@ -633,6 +633,7 @@ for member in anggota:
             <div class="detail">📞 {member['telp']}</div>
         </div>
     </div>
+    <br>
     """, unsafe_allow_html=True)
 
 st.sidebar.markdown('<div class="sidebar-university">🎓 Universitas Negeri Semarang</div>', unsafe_allow_html=True)
