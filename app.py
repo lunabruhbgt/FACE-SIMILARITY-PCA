@@ -752,65 +752,56 @@ elif page == "🌫️ Grayscale":
     uploaded_file = st.file_uploader(
         "📤 Unggah gambar (JPG, PNG, WEBP)",
         type=["jpg", "jpeg", "png", "webp"],
-        accept_multiple_files=False
+        accept_multiple_files=False,
+        key="grayscale_uploader"
     )
 
-    # --- Inisialisasi session state untuk grayscale ---
-    if "grayscale_processed" not in st.session_state:
-        st.session_state.grayscale_processed = False
-    if "grayscale_image" not in st.session_state:
-        st.session_state.grayscale_image = None
-    if "original_image" not in st.session_state:
-        st.session_state.original_image = None
+    # Inisialisasi session state untuk grayscale
+    if "grayscale_done" not in st.session_state:
+        st.session_state.grayscale_done = False
+    if "gray_image" not in st.session_state:
+        st.session_state.gray_image = None
+    if "orig_image" not in st.session_state:
+        st.session_state.orig_image = None
 
-    # Reset status jika file baru diupload
+    # Jika upload file baru, reset status
     if uploaded_file is not None:
-        # Reset status agar tombol muncul lagi
-        st.session_state.grayscale_processed = False
-        # Simpan gambar asli
-        image = Image.open(uploaded_file)
-        st.session_state.original_image = image
-    else:
-        # Jika tidak ada file, reset semua
-        st.session_state.grayscale_processed = False
-        st.session_state.grayscale_image = None
-        st.session_state.original_image = None
+        # Jika file baru berbeda dari yang tersimpan, reset
+        if st.session_state.orig_image is None:
+            st.session_state.orig_image = Image.open(uploaded_file)
+            st.session_state.grayscale_done = False
+            st.session_state.gray_image = None
 
-    # --- Tampilkan tombol jika ada file yang diupload ---
     if uploaded_file is not None:
-        # Tombol Konversi (full width)
+        # Tombol konversi (full width)
         if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
-            # Proses grayscale
-            image = st.session_state.original_image
-            gray_image = image.convert("L")
-            gray_rgb = gray_image.convert("RGB")
-            st.session_state.grayscale_image = gray_rgb
-            st.session_state.grayscale_processed = True
-            st.rerun()
+            if st.session_state.orig_image is not None:
+                gray = st.session_state.orig_image.convert("L").convert("RGB")
+                st.session_state.gray_image = gray
+                st.session_state.grayscale_done = True
+                st.rerun()
 
         # Jika sudah diproses, tampilkan hasil
-        if st.session_state.grayscale_processed and st.session_state.grayscale_image is not None:
-            col_img1, col_img2 = st.columns(2, gap="medium")
-
-            with col_img1:
+        if st.session_state.grayscale_done and st.session_state.gray_image is not None:
+            col1, col2 = st.columns(2, gap="medium")
+            with col1:
                 st.markdown('<div class="result-container">', unsafe_allow_html=True)
                 st.markdown('<div class="pink-badge">🖼️ Gambar Asli</div>', unsafe_allow_html=True)
-                st.image(st.session_state.original_image, use_container_width=True)
-                st.caption(f"Ukuran: {st.session_state.original_image.width} x {st.session_state.original_image.height} px")
+                st.image(st.session_state.orig_image, use_container_width=True)
+                st.caption(f"Ukuran: {st.session_state.orig_image.width} x {st.session_state.orig_image.height} px")
                 st.markdown('</div>', unsafe_allow_html=True)
 
-            with col_img2:
+            with col2:
                 st.markdown('<div class="result-container">', unsafe_allow_html=True)
                 st.markdown('<div class="pink-badge">⚫ Hasil Grayscale</div>', unsafe_allow_html=True)
-                st.image(st.session_state.grayscale_image, use_container_width=True)
-                st.caption(f"Ukuran: {st.session_state.grayscale_image.width} x {st.session_state.grayscale_image.height} px")
+                st.image(st.session_state.gray_image, use_container_width=True)
+                st.caption(f"Ukuran: {st.session_state.gray_image.width} x {st.session_state.gray_image.height} px")
                 st.markdown('</div>', unsafe_allow_html=True)
 
-                # Tombol download
+                # Download button
                 buf = io.BytesIO()
-                st.session_state.grayscale_image.save(buf, format="PNG")
-                byte_im = buf.getvalue()
-                b64 = base64.b64encode(byte_im).decode()
+                st.session_state.gray_image.save(buf, format="PNG")
+                b64 = base64.b64encode(buf.getvalue()).decode()
                 href = f'<a href="data:image/png;base64,{b64}" download="grayscale.png" style="text-decoration:none;">'
                 href += '<button class="download-btn">⬇️ Download Hasil</button></a>'
                 st.markdown(href, unsafe_allow_html=True)
@@ -828,20 +819,12 @@ elif page == "🌫️ Grayscale":
                 """, unsafe_allow_html=True)
 
     else:
+        # Jika tidak ada file, tampilkan pesan (tanpa contoh gambar)
         st.markdown("""
         <div style="text-align:center; padding:2rem 0;">
             <p style="font-size:1.2rem; color:#6A1B4D;">👆 Unggah gambar untuk mulai mengubahnya menjadi hitam-putih</p>
-            <p style="color:#AD1457; opacity:0.7;">Atau lihat contoh di bawah ini:</p>
         </div>
         """, unsafe_allow_html=True)
-
-        example_img = Image.new('RGB', (400, 300), color='#FCE4EC')
-        draw = ImageDraw.Draw(example_img)
-        draw.rectangle([50, 50, 150, 150], fill='#EC407A')
-        draw.rectangle([200, 50, 300, 150], fill='#42A5F5')
-        draw.rectangle([50, 180, 150, 280], fill='#66BB6A')
-        draw.rectangle([200, 180, 300, 280], fill='#FFA726')
-        st.image(example_img, caption="Contoh gambar (unggah gambar Anda sendiri untuk hasil nyata)", use_container_width=True)
 
     st.markdown("""
     <div class="footer-note">
