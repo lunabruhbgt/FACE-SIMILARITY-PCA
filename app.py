@@ -767,37 +767,26 @@ elif page == "🌫️ Grayscale":
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        
-        # Tampilkan dua kolom untuk gambar
         col_img1, col_img2 = st.columns(2, gap="medium")
 
         with col_img1:
             st.markdown('<div class="result-container">', unsafe_allow_html=True)
-            st.markdown('<div class="pink-badge">🖼️ Gambar Asli</div>', unsafe_allow_html=True)
+            st.markdown("### 🖼️ Gambar Asli")
             st.image(image, use_container_width=True)
             st.markdown(f"*Ukuran: {image.width} x {image.height} px*")
             st.markdown('</div>', unsafe_allow_html=True)
 
-        # Tombol Konversi di bawah kolom (full width)
-        st.markdown("---")
-        if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
-            gray_image = image.convert("L")
-            gray_rgb = gray_image.convert("RGB")
-            st.session_state.grayscale_result = gray_rgb
-            st.session_state.grayscale_done = True
-            st.rerun()
+        with col_img2:
+            if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
+                gray_image = image.convert("L")
+                gray_rgb = gray_image.convert("RGB")
 
-        # Jika hasil grayscale sudah ada, tampilkan di kolom kedua
-        if st.session_state.get("grayscale_done", False) and st.session_state.grayscale_result is not None:
-            gray_rgb = st.session_state.grayscale_result
-            with col_img2:
                 st.markdown('<div class="result-container">', unsafe_allow_html=True)
-                st.markdown('<div class="pink-badge">⚫ Hasil Grayscale</div>', unsafe_allow_html=True)
+                st.markdown("### ⚫ Hasil Grayscale")
                 st.image(gray_rgb, use_container_width=True)
                 st.markdown(f"*Ukuran: {gray_rgb.width} x {gray_rgb.height} px*")
                 st.markdown('</div>', unsafe_allow_html=True)
 
-                # Tombol download
                 buf = io.BytesIO()
                 gray_rgb.save(buf, format="PNG")
                 byte_im = buf.getvalue()
@@ -841,7 +830,7 @@ elif page == "🌫️ Grayscale":
         Hasilnya dapat diunduh dalam format PNG. Cocok untuk efek klasik dan penghematan ukuran file.</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
 elif page == "🗜️ Kompresi":
     # ==================== KOMPRESI PCA WARNA (RGB) - TIDAK DIUBAH KE GRAYSCALE ====================
     if not st.session_state.kompresi_visited:
