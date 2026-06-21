@@ -599,32 +599,28 @@ elif st.session_state.page == "🔍 Deteksi":
 st.sidebar.markdown("---")
 st.sidebar.markdown('<div class="sidebar-profile">', unsafe_allow_html=True)
 st.sidebar.markdown("### 👥 Pengembang Aplikasi")
-st.sidebar.markdown("**Teknik Informatika**")
+st.sidebar.markdown("**Sarjana Teknik Informatika**")
 
 anggota = [
     {
-        "inisial": "GDA",
         "nama": "Gea Destadia Al-Zahra",
         "ig": "@gea_destadia_10",
         "telp": "0831-5068-7481",
     },
+    </p>
     {
-        
-        "inisial": "LA",
         "nama": "Luna Amilia",
         "ig": "@luunaaamiiii",
         "telp": "lunaamilia0@gmail.com",
     },
+    </p>
     {
-        
-        "inisial": "NA",
         "nama": "Nadia Azizah",
         "ig": "@ndyyzh",
         "telp": "0858-4631-3309",
     },
+    </p>
     {
-        
-        "inisial": "DAAD",
         "nama": "Dalilah Arifah Ariandi DJR",
         "ig": "@adellianav",
         "telp": "0813-1211-6787",
