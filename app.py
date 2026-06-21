@@ -1,3 +1,10 @@
+# =====================================================
+# APLIKASI ANGEL - PCA FACE SIMILARITY & KOMPRESI
+# =====================================================
+# Dibuat oleh: Kelompok 2 (ANGEL)
+# Mata Kuliah: Aljabar Linier / Computer Vision
+# =====================================================
+
 import streamlit as st
 from PIL import Image, ImageDraw
 import io
@@ -14,7 +21,7 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 from sklearn.datasets import fetch_lfw_people
 import tempfile
 import zipfile
-import cv2
+import cv2  # <--- TAMBAHKAN INI (sebelumnya error)
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -26,6 +33,7 @@ st.set_page_config(
 )
 
 # ======================== CSS GLOBAL ========================
+# ... (CSS sama seperti sebelumnya, tidak diubah) ...
 st.markdown("""
     <style>
         /* ----- BACKGROUND & WARNA DASAR ----- */
@@ -1030,7 +1038,33 @@ elif page == "🗜️ Kompresi":
 
 elif page == "🔍 Deteksi":
     # ==================== DETEKSI KEMIRIPAN DENGAN PCA (EIGENFACES) + COSINE SIMILARITY ====================
-    # ... (header dan penjelasan sama seperti di kode asli)
+    if not st.session_state.deteksi_visited:
+        st.balloons()
+        st.session_state.deteksi_visited = True
+
+    st.markdown("""
+    <div class="deteksi-header">
+        <div class="love-shower">❤️ 💖 ❤️ 💖 ❤️ 💖 ❤️ 💖 ❤️ 💖 ❤️ 💖</div>
+        <h1>🔍 Deteksi Kemiripan Wajah</h1>
+        <p>Bandingkan dua wajah dengan metode PCA (Eigenfaces) dan Cosine Similarity.</p>
+        <div class="love-shower">❤️ 💖 ❤️ 💖 ❤️ 💖 ❤️ 💖 ❤️ 💖 ❤️ 💖</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FCE4EC, #FFF0F5); 
+                padding: 1.5rem; border-radius: 16px; border: 1px solid #F8BBD0; 
+                margin-bottom: 2rem; text-align: center;">
+        <p style="font-size:1.2rem; color:#6A1B4D;">
+            ❤️ <b>Cara kerja:</b> PCA mengekstrak fitur utama (eigenfaces) dari data latih (wajah). 
+            Dua wajah yang dibandingkan diproyeksikan ke ruang PCA, lalu dihitung kemiripannya dengan <b>Cosine Similarity</b>.
+            Semakin tinggi skor, semakin mirip kedua wajah.
+        </p>
+        <p style="color:#880E4F; font-style:italic;">
+            "Setiap wajah unik, tapi kecocokan bisa ditemukan."
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     # --- Inisialisasi session state untuk model default ---
     if "deteksi_model_loaded" not in st.session_state:
@@ -1053,6 +1087,7 @@ elif page == "🔍 Deteksi":
                     for label in selected:
                         idx = np.where(lfw.target == label)[0][:5]
                         for i in idx:
+                            # Resize menggunakan cv2 (sekarang sudah diimport)
                             img = cv2.resize(lfw.images[i], (100, 100)).flatten() / 255.0
                             X_train.append(img)
                     X_train = np.array(X_train)
@@ -1203,6 +1238,6 @@ elif page == "🔍 Deteksi":
     st.markdown("""
     <div class="footer-note">
         <p>📌 <b>Keterangan:</b> Deteksi kemiripan menggunakan PCA (Eigenfaces) dan Cosine Similarity. 
-        Upload data latih (ZIP) untuk hasil lebih akurat, atau biarkan sistem menggunakan augmentasi otomatis.</p>
+        Upload data latih (ZIP) untuk hasil lebih akurat, atau biarkan sistem menggunakan data latih default LFW.</p>
     </div>
     """, unsafe_allow_html=True)
