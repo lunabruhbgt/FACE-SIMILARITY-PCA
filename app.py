@@ -755,30 +755,60 @@ elif page == "🌫️ Grayscale":
         accept_multiple_files=False
     )
 
+    # --- Inisialisasi session state untuk grayscale ---
+    if "grayscale_processed" not in st.session_state:
+        st.session_state.grayscale_processed = False
+    if "grayscale_image" not in st.session_state:
+        st.session_state.grayscale_image = None
+    if "original_image" not in st.session_state:
+        st.session_state.original_image = None
+
+    # Reset status jika file baru diupload
     if uploaded_file is not None:
+        # Reset status agar tombol muncul lagi
+        st.session_state.grayscale_processed = False
+        # Simpan gambar asli
         image = Image.open(uploaded_file)
-        col_img1, col_img2 = st.columns(2, gap="medium")
+        st.session_state.original_image = image
+    else:
+        # Jika tidak ada file, reset semua
+        st.session_state.grayscale_processed = False
+        st.session_state.grayscale_image = None
+        st.session_state.original_image = None
 
-        with col_img1:
-            st.markdown('<div class="result-container">', unsafe_allow_html=True)
-            st.markdown('<div class="pink-badge">🖼️ Gambar Asli</div>', unsafe_allow_html=True)
-            st.image(image, use_container_width=True)
-            st.caption(f"Ukuran: {image.width} x {image.height} px")
-            st.markdown('</div>', unsafe_allow_html=True)
+    # --- Tampilkan tombol jika ada file yang diupload ---
+    if uploaded_file is not None:
+        # Tombol Konversi (full width)
+        if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
+            # Proses grayscale
+            image = st.session_state.original_image
+            gray_image = image.convert("L")
+            gray_rgb = gray_image.convert("RGB")
+            st.session_state.grayscale_image = gray_rgb
+            st.session_state.grayscale_processed = True
+            st.rerun()
 
-        with col_img2:
-            if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
-                gray_image = image.convert("L")
-                gray_rgb = gray_image.convert("RGB")
+        # Jika sudah diproses, tampilkan hasil
+        if st.session_state.grayscale_processed and st.session_state.grayscale_image is not None:
+            col_img1, col_img2 = st.columns(2, gap="medium")
 
+            with col_img1:
                 st.markdown('<div class="result-container">', unsafe_allow_html=True)
-                st.markdown('<div class="pink-badge">⚫ Hasil Grayscale</div>', unsafe_allow_html=True)
-                st.image(gray_rgb, use_container_width=True)
-                st.caption(f"Ukuran: {gray_rgb.width} x {gray_rgb.height} px")
+                st.markdown('<div class="pink-badge">🖼️ Gambar Asli</div>', unsafe_allow_html=True)
+                st.image(st.session_state.original_image, use_container_width=True)
+                st.caption(f"Ukuran: {st.session_state.original_image.width} x {st.session_state.original_image.height} px")
                 st.markdown('</div>', unsafe_allow_html=True)
 
+            with col_img2:
+                st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                st.markdown('<div class="pink-badge">⚫ Hasil Grayscale</div>', unsafe_allow_html=True)
+                st.image(st.session_state.grayscale_image, use_container_width=True)
+                st.caption(f"Ukuran: {st.session_state.grayscale_image.width} x {st.session_state.grayscale_image.height} px")
+                st.markdown('</div>', unsafe_allow_html=True)
+
+                # Tombol download
                 buf = io.BytesIO()
-                gray_rgb.save(buf, format="PNG")
+                st.session_state.grayscale_image.save(buf, format="PNG")
                 byte_im = buf.getvalue()
                 b64 = base64.b64encode(byte_im).decode()
                 href = f'<a href="data:image/png;base64,{b64}" download="grayscale.png" style="text-decoration:none;">'
