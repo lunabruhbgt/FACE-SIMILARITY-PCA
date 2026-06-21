@@ -1134,7 +1134,7 @@ elif page == "🔍 Deteksi":
         with col_show2:
             st.image(img2, caption="Foto Kedua", use_container_width=True)
 
-        if st.button("🔎 Hitung Kemiripan", use_container_width=True):
+    if st.button("🔎 Hitung Kemiripan", use_container_width=True):
     try:
         size = (100, 100)
         im1 = Image.open(img1).convert("L").resize(size)
