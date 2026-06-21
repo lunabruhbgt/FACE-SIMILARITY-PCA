@@ -756,7 +756,7 @@ elif page == "🌫️ Grayscale":
         key="grayscale_uploader"
     )
 
-    # Inisialisasi session state untuk grayscale
+    # Inisialisasi session state
     if "grayscale_done" not in st.session_state:
         st.session_state.grayscale_done = False
     if "gray_image" not in st.session_state:
@@ -764,16 +764,15 @@ elif page == "🌫️ Grayscale":
     if "orig_image" not in st.session_state:
         st.session_state.orig_image = None
 
-    # Jika upload file baru, reset status
+    # Reset jika file baru
     if uploaded_file is not None:
-        # Jika file baru berbeda dari yang tersimpan, reset
         if st.session_state.orig_image is None:
             st.session_state.orig_image = Image.open(uploaded_file)
             st.session_state.grayscale_done = False
             st.session_state.gray_image = None
 
     if uploaded_file is not None:
-        # Tombol konversi (full width)
+        # Tombol konversi
         if st.button("🔄 Konversi ke Grayscale", use_container_width=True):
             if st.session_state.orig_image is not None:
                 gray = st.session_state.orig_image.convert("L").convert("RGB")
@@ -781,7 +780,7 @@ elif page == "🌫️ Grayscale":
                 st.session_state.grayscale_done = True
                 st.rerun()
 
-        # Jika sudah diproses, tampilkan hasil
+        # Tampilkan hasil jika sudah diproses
         if st.session_state.grayscale_done and st.session_state.gray_image is not None:
             col1, col2 = st.columns(2, gap="medium")
             with col1:
@@ -798,28 +797,28 @@ elif page == "🌫️ Grayscale":
                 st.caption(f"Ukuran: {st.session_state.gray_image.width} x {st.session_state.gray_image.height} px")
                 st.markdown('</div>', unsafe_allow_html=True)
 
-                # Download button
-                buf = io.BytesIO()
-                st.session_state.gray_image.save(buf, format="PNG")
-                b64 = base64.b64encode(buf.getvalue()).decode()
-                href = f'<a href="data:image/png;base64,{b64}" download="grayscale.png" style="text-decoration:none;">'
-                href += '<button class="download-btn">⬇️ Download Hasil</button></a>'
-                st.markdown(href, unsafe_allow_html=True)
+            # --- DI LUAR KOLOM (FULL WIDTH / KIRI) ---
+            # Tombol download
+            buf = io.BytesIO()
+            st.session_state.gray_image.save(buf, format="PNG")
+            b64 = base64.b64encode(buf.getvalue()).decode()
+            href = f'<a href="data:image/png;base64,{b64}" download="grayscale.png" style="text-decoration:none;">'
+            href += '<button class="download-btn">⬇️ Download Hasil</button></a>'
+            st.markdown(href, unsafe_allow_html=True)
 
-                st.success("🌸 Semoga membantu, terima kasih banyak telah menggunakan jasa layanan kami, salam cinta ❤️")
-                st.balloons()
+            st.success("🌸 Semoga membantu, terima kasih banyak telah menggunakan jasa layanan kami, salam cinta ❤️")
+            st.balloons()
 
-                st.markdown("""
-                <div class="info-box">
-                    <b>💡 Manfaat Grayscale:</b><br>
-                    • Mengurangi kompleksitas warna, fokus pada bentuk dan tekstur.<br>
-                    • Menghemat ruang penyimpanan (ukuran file lebih kecil).<br>
-                    • Memberikan nuansa artistik dan klasik pada foto.
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box">
+                <b>💡 Manfaat Grayscale:</b><br>
+                • Mengurangi kompleksitas warna, fokus pada bentuk dan tekstur.<br>
+                • Menghemat ruang penyimpanan (ukuran file lebih kecil).<br>
+                • Memberikan nuansa artistik dan klasik pada foto.
+            </div>
+            """, unsafe_allow_html=True)
 
     else:
-        # Jika tidak ada file, tampilkan pesan (tanpa contoh gambar)
         st.markdown("""
         <div style="text-align:center; padding:2rem 0;">
             <p style="font-size:1.2rem; color:#6A1B4D;">👆 Unggah gambar untuk mulai mengubahnya menjadi hitam-putih</p>
